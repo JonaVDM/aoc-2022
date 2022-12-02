@@ -50,3 +50,51 @@ func Run() [2]int {
 		scoreB,
 	}
 }
+
+func Run2() [2]int {
+	// For part one the formula used was:
+	// (a - b + 3) mod 3 = c
+	// Where 0 means drawing, 1 losing and 2 winning.
+
+	// For part two the formula used was:
+	// (a + c + 1) mod 3 = b
+
+	data := utils.ReadFile("02")
+	scoreA := 0
+	scoreB := 0
+
+	// some magic numbers
+	playerOne := 64
+	playerTwo := 87
+
+	for _, v := range data {
+		p1 := int(v[0]) - playerOne
+		p2 := int(v[2]) - playerTwo
+		scoreA += p2
+
+		out := (p1 - p2 + 3) % 3
+		if out == 2 {
+			scoreA += 6
+		} else if out == 0 {
+			scoreA += 3
+		}
+
+		if p2 == 2 {
+			scoreB += 3
+		} else if p2 == 3 {
+			scoreB += 6
+		}
+
+		out = (p1 + p2 + 1) % 3
+		if out == 0 {
+			out = 3
+		}
+
+		scoreB += out
+	}
+
+	return [2]int{
+		scoreA,
+		scoreB,
+	}
+}
