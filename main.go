@@ -4,10 +4,12 @@ import (
 	"fmt"
 
 	"github.com/jonavdm/aoc-2022/day01"
+	"github.com/jonavdm/aoc-2022/day02"
 )
 
 func main() {
 	printOutput("1", day01.Run())
+	printOutput("2", day02.Run())
 }
 
 func printOutput(day string, out [2]int) {
