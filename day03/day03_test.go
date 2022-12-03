@@ -11,3 +11,9 @@ import (
 func TestRun(t *testing.T) {
 	assert.Equal(t, [2]int{8493, 2552}, day03.Run())
 }
+
+func BenchmarkRun(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		day03.Run()
+	}
+}
