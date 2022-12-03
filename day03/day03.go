@@ -1,6 +1,8 @@
 package day03
 
 import (
+	"strings"
+
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
@@ -11,41 +13,24 @@ func Run() [2]int {
 	sumA := 0
 	for _, v := range data {
 		spl := len(v) / 2
-
-		var letter byte
-		for i := 0; i < spl; i++ {
-			for j := spl; j < len(v); j++ {
-				if v[i] == v[j] {
-					letter = v[i]
-					break
-				}
-				if letter != 0 {
-					break
-				}
+		oth := v[spl:]
+		for _, r := range v[:spl] {
+			if strings.Contains(oth, string(r)) {
+				sumA += getPriority(r)
+				break
 			}
 		}
-
-		sumA += getPriority(letter)
 	}
 
 	// part b
 	sumB := 0
 	for i := 0; i < len(data); i += 3 {
-		var letter byte
-
-	Outer:
-		for x := 0; x < len(data[i]); x++ {
-			for y := 0; y < len(data[i+1]); y++ {
-				for z := 0; z < len(data[i+2]); z++ {
-					if data[i][x] == data[i+1][y] && data[i][x] == data[i+2][z] {
-						letter = data[i][x]
-						break Outer
-					}
-				}
+		for _, v := range data[i] {
+			if strings.Contains(data[i+1], string(v)) && strings.Contains(data[i+2], string(v)) {
+				sumB += getPriority(v)
+				break
 			}
 		}
-
-		sumB += getPriority(letter)
 	}
 
 	return [2]int{
@@ -53,7 +38,7 @@ func Run() [2]int {
 	}
 }
 
-func getPriority(letter byte) int {
+func getPriority(letter rune) int {
 	if letter > 96 {
 		return int(letter) - 96
 	}
