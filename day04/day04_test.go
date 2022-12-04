@@ -9,7 +9,7 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	assert.Equal(t, [2]interface{}{0, 0}, day04.Run())
+	assert.Equal(t, [2]interface{}{444, 801}, day04.Run())
 }
 
 func BenchmarkRun(b *testing.B) {
