@@ -4,7 +4,7 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]int {
+func Run() [2]interface{} {
 	data := utils.ReadFile("02")
 
 	// Part one
@@ -45,13 +45,13 @@ func Run() [2]int {
 		scoreB += scoresB[row]
 	}
 
-	return [2]int{
+	return [2]interface{}{
 		scoreA,
 		scoreB,
 	}
 }
 
-func Run2() [2]int {
+func Run2() [2]interface{} {
 	// For part one the formula used was:
 	// (a - b + 3) mod 3 = c
 	// Where 0 means drawing, 1 losing and 2 winning.
@@ -93,7 +93,7 @@ func Run2() [2]int {
 		scoreB += out
 	}
 
-	return [2]int{
+	return [2]interface{}{
 		scoreA,
 		scoreB,
 	}

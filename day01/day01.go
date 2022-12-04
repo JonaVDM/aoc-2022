@@ -7,14 +7,14 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]int {
+func Run() [2]interface{} {
 	data := utils.ReadFile("01")
 	cals := findCal(data)
 
 	sort.Ints(cals)
 	l := len(cals)
 
-	return [2]int{
+	return [2]interface{}{
 		utils.Max(cals),
 		cals[l-1] + cals[l-2] + cals[l-3],
 	}

@@ -6,7 +6,7 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]int {
+func Run() [2]interface{} {
 	data := utils.ReadFile("03")
 
 	// part a
@@ -33,7 +33,7 @@ func Run() [2]int {
 		}
 	}
 
-	return [2]int{
+	return [2]interface{}{
 		sumA, sumB,
 	}
 }

@@ -9,5 +9,5 @@ import (
 )
 
 func TestDay01(t *testing.T) {
-	assert.Equal(t, [2]int{67658, 200158}, day01.Run())
+	assert.Equal(t, [2]interface{}{67658, 200158}, day01.Run())
 }
