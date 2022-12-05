@@ -17,3 +17,14 @@ func ReadFile(file string) []string {
 
 	return strings.Split(inp, "\n")
 }
+
+func ReadFileRaw(file string) []string {
+	f, err := os.ReadFile(fmt.Sprintf("inputs/%s", file))
+	if err != nil {
+		panic("could not read input file")
+	}
+
+	inp := string(f)
+
+	return strings.Split(inp, "\n")
+}
