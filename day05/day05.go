@@ -38,8 +38,10 @@ func Run() [2]interface{} {
 		if err != nil {
 			panic(err)
 		}
+		nv := make([]rune, len(v))
+		copy(nv, v)
 		storageA[nk] = v
-		storageB[nk] = v
+		storageB[nk] = nv
 	}
 
 	for i := startAt + 2; i < len(data); i++ {
