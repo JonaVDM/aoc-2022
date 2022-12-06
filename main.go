@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/jonavdm/aoc-2022/day01"
@@ -18,6 +19,9 @@ type Runner struct {
 }
 
 func main() {
+	onlyDay := flag.Int("day", -1, "Pizzapi")
+	flag.Parse()
+
 	runners := []Runner{
 		{1, day01.Run, "day01"},
 		{2, day02.Run2, "day02"},
@@ -28,8 +32,10 @@ func main() {
 	}
 
 	for _, runner := range runners {
-		out := runner.Function(runner.File)
-		printOutput(runner.Day, out)
+		if *onlyDay <= 0 || runner.Day == *onlyDay {
+			out := runner.Function(runner.File)
+			printOutput(runner.Day, out)
+		}
 	}
 }
 
