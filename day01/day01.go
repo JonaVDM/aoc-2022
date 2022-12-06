@@ -7,8 +7,8 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]interface{} {
-	data := utils.ReadFile("01")
+func Run(file string) [2]interface{} {
+	data := utils.ReadFile(file)
 	cals := findCal(data)
 
 	sort.Ints(cals)

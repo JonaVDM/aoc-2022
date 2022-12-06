@@ -4,8 +4,8 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]interface{} {
-	data := utils.ReadSingleLineFile("day06")
+func Run(file string) [2]interface{} {
+	data := utils.ReadSingleLineFile(file)
 
 	partA := -1
 	for i := 0; i < len(data)-4; i++ {

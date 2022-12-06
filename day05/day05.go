@@ -7,8 +7,8 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]interface{} {
-	data := utils.ReadFileRaw("day05")
+func Run(file string) [2]interface{} {
+	data := utils.ReadFileRaw(file)
 
 	tmpStorage := make(map[int][]rune)
 	storageA := make(map[int][]rune)

@@ -4,8 +4,8 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]interface{} {
-	data := utils.ReadFile("02")
+func Run(file string) [2]interface{} {
+	data := utils.ReadFile(file)
 
 	// Part one
 	scoresA := make(map[string]int)
@@ -51,7 +51,7 @@ func Run() [2]interface{} {
 	}
 }
 
-func Run2() [2]interface{} {
+func Run2(file string) [2]interface{} {
 	// For part one the formula used was:
 	// (a - b + 3) mod 3 = c
 	// Where 0 means drawing, 1 losing and 2 winning.
@@ -59,7 +59,7 @@ func Run2() [2]interface{} {
 	// For part two the formula used was:
 	// (a + c + 1) mod 3 = b
 
-	data := utils.ReadFile("02")
+	data := utils.ReadFile(file)
 	scoreA := 0
 	scoreB := 0
 

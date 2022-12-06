@@ -6,8 +6,8 @@ import (
 	"github.com/jonavdm/aoc-2022/utils"
 )
 
-func Run() [2]interface{} {
-	data := utils.ReadFile("day04")
+func Run(file string) [2]interface{} {
+	data := utils.ReadFile(file)
 
 	partA := 0
 	partB := 0

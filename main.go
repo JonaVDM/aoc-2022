@@ -11,15 +11,28 @@ import (
 	"github.com/jonavdm/aoc-2022/day06"
 )
 
-func main() {
-	printOutput("1", day01.Run())
-	printOutput("2", day02.Run2())
-	printOutput("3", day03.Run())
-	printOutput("4", day04.Run())
-	printOutput("5", day05.Run())
-	printOutput("6", day06.Run())
+type Runner struct {
+	Day      int
+	Function func(string) [2]interface{}
+	File     string
 }
 
-func printOutput(day string, out [2]interface{}) {
-	fmt.Printf("\n--- Day %s ---\nPart One: %v\nPart Two: %v\n", day, out[0], out[1])
+func main() {
+	runners := []Runner{
+		{1, day01.Run, "day01"},
+		{2, day02.Run2, "day02"},
+		{3, day03.Run, "day03"},
+		{4, day04.Run, "day04"},
+		{5, day05.Run, "day05"},
+		{6, day06.Run, "day06"},
+	}
+
+	for _, runner := range runners {
+		out := runner.Function(runner.File)
+		printOutput(runner.Day, out)
+	}
+}
+
+func printOutput(day int, out [2]interface{}) {
+	fmt.Printf("\n--- Day %d ---\nPart One: %v\nPart Two: %v\n", day, out[0], out[1])
 }

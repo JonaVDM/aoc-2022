@@ -1,4 +1,3 @@
-
 package day06_test
 
 import (
@@ -10,12 +9,11 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	assert.Equal(t, [2]interface{}{0, 0}, day06.Run())
+	assert.Equal(t, [2]interface{}{1282, 3513}, day06.Run("day06"))
 }
 
 func BenchmarkRun(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		day06.Run()
+		day06.Run("day06")
 	}
 }
-	
