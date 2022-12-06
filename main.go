@@ -8,6 +8,7 @@ import (
 	"github.com/jonavdm/aoc-2022/day03"
 	"github.com/jonavdm/aoc-2022/day04"
 	"github.com/jonavdm/aoc-2022/day05"
+	"github.com/jonavdm/aoc-2022/day06"
 )
 
 func main() {
@@ -16,6 +17,7 @@ func main() {
 	printOutput("3", day03.Run())
 	printOutput("4", day04.Run())
 	printOutput("5", day05.Run())
+	printOutput("6", day06.Run())
 }
 
 func printOutput(day string, out [2]interface{}) {
