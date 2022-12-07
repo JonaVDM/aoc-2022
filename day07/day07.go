@@ -22,10 +22,6 @@ func Run(file string) [2]interface{} {
 }
 
 func FindDirs(node *Node) int {
-	if !node.IsDir {
-		return 0
-	}
-
 	s := 0
 	if node.Size <= 100000 {
 		s += node.Size
@@ -47,10 +43,6 @@ func FindSmallest(node *Node, required int) int {
 	sizes = append(sizes, node.Size)
 
 	for _, child := range node.Children {
-		if !child.IsDir {
-			continue
-		}
-
 		sizes = append(sizes, FindSmallest(child, required))
 	}
 
@@ -63,7 +55,6 @@ func ParseFileSystem(data []string) Node {
 		Children: make([]*Node, 0),
 		Parent:   nil,
 		Size:     0,
-		IsDir:    true,
 	}
 
 	cur := &root
@@ -73,6 +64,7 @@ func ParseFileSystem(data []string) Node {
 
 		// Is command
 		if std[0] == "$" && std[1] == "ls" {
+			// SKIP
 			continue
 		}
 
@@ -91,10 +83,6 @@ func ParseFileSystem(data []string) Node {
 			continue
 		}
 
-		if std[0] == "$" {
-			panic("Unkown command")
-		}
-
 		// Is directory
 		if std[0] == "dir" {
 			cur.Children = append(cur.Children, &Node{
@@ -102,7 +90,6 @@ func ParseFileSystem(data []string) Node {
 				Children: make([]*Node, 0),
 				Parent:   cur,
 				Size:     0,
-				IsDir:    true,
 			})
 
 			continue
@@ -113,14 +100,6 @@ func ParseFileSystem(data []string) Node {
 		if err != nil {
 			panic(err)
 		}
-
-		cur.Children = append(cur.Children, &Node{
-			Name:     std[0],
-			Children: nil,
-			Parent:   cur,
-			Size:     size,
-			IsDir:    false,
-		})
 
 		parent := cur
 		for {
@@ -140,5 +119,4 @@ type Node struct {
 	Children []*Node
 	Parent   *Node
 	Size     int
-	IsDir    bool
 }
