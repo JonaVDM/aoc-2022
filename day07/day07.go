@@ -11,6 +11,53 @@ import (
 func Run(file string) [2]interface{} {
 	data := utils.ReadFile(file)
 
+	root := ParseFileSystem(data)
+
+	required := 30000000 - (70000000 - root.Size)
+
+	return [2]interface{}{
+		FindDirs(&root),
+		FindSmallest(&root, required),
+	}
+}
+
+func FindDirs(node *Node) int {
+	if node.Type == "file" {
+		return 0
+	}
+
+	s := 0
+	if node.Size <= 100000 {
+		s += node.Size
+	}
+
+	for _, v := range node.Children {
+		s += FindDirs(v)
+	}
+
+	return s
+}
+
+func FindSmallest(node *Node, required int) int {
+	if node.Size < required {
+		return math.MaxInt
+	}
+
+	sizes := make([]int, 0)
+	sizes = append(sizes, node.Size)
+
+	for _, child := range node.Children {
+		if child.Type != "dir" {
+			continue
+		}
+
+		sizes = append(sizes, FindSmallest(child, required))
+	}
+
+	return utils.Min(sizes)
+}
+
+func ParseFileSystem(data []string) Node {
 	root := Node{
 		Name:     "/",
 		Children: make([]*Node, 0),
@@ -23,11 +70,9 @@ func Run(file string) [2]interface{} {
 
 	for _, v := range data {
 		std := strings.Split(v, " ")
-		// fmt.Println(std)
 
 		// Is command
 		if std[0] == "$" && std[1] == "ls" {
-			// 	fmt.Println("List command")
 			continue
 		}
 
@@ -87,48 +132,7 @@ func Run(file string) [2]interface{} {
 		}
 	}
 
-	required := 30000000 - (70000000 - root.Size)
-
-	return [2]interface{}{
-		FindDirs(&root),
-		FindSmallest(&root, required),
-	}
-}
-
-func FindDirs(node *Node) int {
-	if node.Type == "file" {
-		return 0
-	}
-
-	s := 0
-	if node.Size <= 100000 {
-		s += node.Size
-	}
-
-	for _, v := range node.Children {
-		s += FindDirs(v)
-	}
-
-	return s
-}
-
-func FindSmallest(node *Node, required int) int {
-	if node.Size < required {
-		return math.MaxInt
-	}
-
-	sizes := make([]int, 0)
-	sizes = append(sizes, node.Size)
-
-	for _, child := range node.Children {
-		if child.Type != "dir" {
-			continue
-		}
-
-		sizes = append(sizes, FindSmallest(child, required))
-	}
-
-	return utils.Min(sizes)
+	return root
 }
 
 type Node struct {
