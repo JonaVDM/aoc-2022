@@ -23,7 +23,8 @@ type Runner struct {
 }
 
 func main() {
-	onlyDay := flag.Int("day", -1, "Pizzapi")
+	onlyDay := flag.Int("day", -1, "Specify the day")
+	replacedInput := flag.String("file", "", "Run with a different input")
 	flag.Parse()
 
 	runners := []Runner{
@@ -40,7 +41,16 @@ func main() {
 	}
 
 	for _, runner := range runners {
-		if *onlyDay <= 0 || runner.Day == *onlyDay {
+		if *onlyDay > 0 && runner.Day == *onlyDay {
+			file := runner.File
+			if *replacedInput != "" {
+				file = *replacedInput
+			}
+			out := runner.Function(file)
+			printOutput(runner.Day, out)
+		}
+
+		if *onlyDay == -1 {
 			out := runner.Function(runner.File)
 			printOutput(runner.Day, out)
 		}
