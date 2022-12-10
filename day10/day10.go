@@ -38,7 +38,7 @@ func Run(file string) [2]interface{} {
 		if utils.AbsInt(position-x) <= 1 {
 			drawing += "#"
 		} else {
-			drawing += "."
+			drawing += " "
 		}
 
 		position++
