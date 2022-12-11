@@ -1,7 +1,6 @@
 package day11
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 	"strings"
@@ -21,17 +20,17 @@ func Run(file string) [2]interface{} {
 		for m := 0; m < len(monkeys); m++ {
 			for _, item := range monkeys[m].Items {
 				countersA[m] += 1
-				n1, err := strconv.Atoi(monkeys[m].Operation[0])
+				n1, err := strconv.ParseUint(monkeys[m].Operation[0], 10, 64)
 				if err != nil {
 					n1 = item
 				}
 
-				n2, err := strconv.Atoi(monkeys[m].Operation[2])
+				n2, err := strconv.ParseUint(monkeys[m].Operation[2], 10, 64)
 				if err != nil {
 					n2 = item
 				}
 
-				var newValue int
+				var newValue uint64
 				if monkeys[m].Operation[1] == "*" {
 					newValue = n1 * n2
 				} else if monkeys[m].Operation[1] == "+" {
@@ -47,27 +46,32 @@ func Run(file string) [2]interface{} {
 					monkeys[monkeys[m].IfFalse].Items = append(monkeys[monkeys[m].IfFalse].Items, newValue)
 				}
 			}
-			monkeys[m].Items = make([]int, 0)
+			monkeys[m].Items = make([]uint64, 0)
 		}
 	}
 
-	// part one
+	var modulos uint64 = 1
+	for _, monkey := range monkeys {
+		modulos *= monkey.Test
+	}
+
+	// part two
 	monkeys = parse(data)
 	for i := 0; i < 10000; i++ {
 		for m := 0; m < len(monkeys); m++ {
 			for _, item := range monkeys[m].Items {
 				countersB[m] += 1
-				n1, err := strconv.Atoi(monkeys[m].Operation[0])
+				n1, err := strconv.ParseUint(monkeys[m].Operation[0], 10, 64)
 				if err != nil {
 					n1 = item
 				}
 
-				n2, err := strconv.Atoi(monkeys[m].Operation[2])
+				n2, err := strconv.ParseUint(monkeys[m].Operation[2], 10, 64)
 				if err != nil {
 					n2 = item
 				}
 
-				var newValue int
+				var newValue uint64
 				if monkeys[m].Operation[1] == "*" {
 					newValue = n1 * n2
 				} else if monkeys[m].Operation[1] == "+" {
@@ -76,22 +80,19 @@ func Run(file string) [2]interface{} {
 					panic("Invalid operation")
 				}
 
+				if newValue < item {
+					panic("Int overflow")
+				}
+
+				newValue = newValue % modulos
 				if newValue%monkeys[m].Test == 0 {
 					monkeys[monkeys[m].IfTrue].Items = append(monkeys[monkeys[m].IfTrue].Items, newValue)
 				} else {
 					monkeys[monkeys[m].IfFalse].Items = append(monkeys[monkeys[m].IfFalse].Items, newValue)
 				}
 			}
-			monkeys[m].Items = make([]int, 0)
+			monkeys[m].Items = make([]uint64, 0)
 		}
-	}
-	// 1_327_451_967_748_545_085
-	// 8_770_139_538_443_747_337
-	// 18_446_744_073_709_551_615 (max u64)
-
-	for i, monk := range monkeys {
-		fmt.Println(countersB[i])
-		fmt.Println(monk.Items)
 	}
 
 	sort.Ints(countersA)
@@ -105,8 +106,8 @@ func Run(file string) [2]interface{} {
 }
 
 type Monkey struct {
-	Test      int
-	Items     []int
+	Test      uint64
+	Items     []uint64
 	IfTrue    int
 	IfFalse   int
 	Operation []string
@@ -122,14 +123,14 @@ func parse(data []string) []Monkey {
 		if instruction[0] == "Monkey" {
 			curr++
 			monkeys = append(monkeys, Monkey{
-				Items: make([]int, 0),
+				Items: make([]uint64, 0),
 			})
 			continue
 		}
 
 		if instruction[0] == "Starting" {
 			for _, item := range instruction[2:] {
-				num, err := strconv.Atoi(strings.Trim(item, ","))
+				num, err := strconv.ParseUint(strings.Trim(item, ","), 10, 64)
 				if err != nil {
 					panic(err)
 				}
@@ -145,7 +146,7 @@ func parse(data []string) []Monkey {
 		}
 
 		if instruction[0] == "Test:" {
-			num, err := strconv.Atoi(instruction[len(instruction)-1])
+			num, err := strconv.ParseUint(instruction[len(instruction)-1], 10, 64)
 			if err != nil {
 				panic(err)
 			}
