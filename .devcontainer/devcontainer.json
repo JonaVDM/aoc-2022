@@ -1,0 +1,21 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
+{
+  "name": "Go",
+  "image": "mcr.microsoft.com/devcontainers/go:0-1.19",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "GitHub.copilot"
+      ],
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go"
+      }
+    }
+  },
+
+  "postCreateCommand": "go install github.com/mitranim/gow@latest"
+}
