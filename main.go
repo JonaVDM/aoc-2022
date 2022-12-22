@@ -50,6 +50,7 @@ func main() {
 		{16, day16.Run, "day16"},
 		{17, day17.Run, "day17"},
 		{18, day18.Run, "day18"},
+		// {19, day19.Run, "day19"},
 	}
 
 	for _, runner := range runners {
